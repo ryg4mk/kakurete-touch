@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+  <meta name="theme-color" content="#dff7d7">
+  <title>かくれてタッチ！ | ONE TAKE GAME #003</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="app" aria-label="かくれてタッチ！">
+    <section class="game-shell" id="gameShell">
+      <canvas id="gameCanvas" width="360" height="640" aria-label="ゲーム画面"></canvas>
+
+      <div class="hud" aria-live="polite">
+        <button id="muteButton" class="icon-button" type="button" aria-label="ミュート切替">🔇</button>
+        <div id="timeLabel" class="time-label">TIME --.--</div>
+      </div>
+
+      <div id="speechBubble" class="speech-bubble hidden" aria-live="polite"></div>
+      <div id="warningMark" class="warning-mark hidden" aria-hidden="true">!</div>
+      <div id="countdown" class="countdown hidden" aria-live="assertive"></div>
+
+      <section id="titleScreen" class="overlay panel-screen active" aria-labelledby="titleText">
+        <div class="panel title-panel">
+          <p class="series">ONE TAKE GAME #003</p>
+          <h1 id="titleText">かくれてタッチ！</h1>
+          <p class="howto">画面を連打して鬼に近づこう！<br>鬼が振り向いたら動いちゃダメ！<br>障害物のうしろに隠れると安全だよ。</p>
+          <div class="control-guide" aria-label="操作方法">
+            <span>↖<small>左</small></span>
+            <span>↑<small>中央</small></span>
+            <span>↗<small>右</small></span>
+          </div>
+          <button id="startButton" class="main-button" type="button">START</button>
+          <p class="mute-note">音は最初からOFFです。左上の 🔇 / 🔊 で切替できます。</p>
+        </div>
+      </section>
+
+      <section id="resultScreen" class="overlay panel-screen" aria-live="assertive">
+        <div class="panel result-panel">
+          <p id="resultEyebrow" class="result-eyebrow"></p>
+          <h2 id="resultTitle">タッチ成功！</h2>
+          <div id="resultDetails" class="result-details"></div>
+          <button id="retryButton" class="main-button" type="button">もう一回</button>
+        </div>
+      </section>
+
+      <div class="tap-zones" aria-hidden="true">
+        <div class="tap-zone"><span>↖</span></div>
+        <div class="tap-zone"><span>↑</span></div>
+        <div class="tap-zone"><span>↗</span></div>
+      </div>
+    </section>
+  </main>
+  <script src="game.js"></script>
+</body>
+</html>

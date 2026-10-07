@@ -1,0 +1,85 @@
+:root {
+  color-scheme: light;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: #eef8ee;
+  --ink: #27343a;
+  --panel: rgba(255,255,255,.96);
+  --accent: #ff765f;
+  --accent-dark: #d95342;
+}
+
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+html, body { margin: 0; min-height: 100%; overflow: hidden; overscroll-behavior: none; }
+body { min-height: 100dvh; background: radial-gradient(circle at 50% 18%, #f8fff4, #dbeed8 70%); color: var(--ink); touch-action: none; user-select: none; -webkit-user-select: none; }
+button { font: inherit; }
+
+.app { width: 100vw; height: 100dvh; display: grid; place-items: center; padding: env(safe-area-inset-top) 0 env(safe-area-inset-bottom); }
+.game-shell {
+  position: relative;
+  width: min(100vw, calc((100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom)) * 0.5625), 430px);
+  height: min(calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom)), calc(100vw * 1.7777778), 764px);
+  aspect-ratio: 9 / 16;
+  overflow: hidden;
+  border-radius: clamp(0px, 1.5vw, 18px);
+  background: #bfe6a8;
+  box-shadow: 0 10px 35px rgba(49, 78, 54, .18);
+  isolation: isolate;
+  touch-action: none;
+}
+
+#gameCanvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; touch-action: none; }
+
+.hud { position: absolute; z-index: 12; inset: 10px 10px auto 10px; display: flex; justify-content: space-between; align-items: center; pointer-events: none; }
+.icon-button, .time-label { pointer-events: auto; border: 0; border-radius: 999px; background: rgba(255,255,255,.88); box-shadow: 0 2px 8px rgba(0,0,0,.10); color: #27343a; min-height: 38px; }
+.icon-button { width: 42px; display: grid; place-items: center; font-size: 20px; cursor: pointer; touch-action: manipulation; }
+.time-label { display: flex; align-items: center; padding: 0 12px; font-weight: 800; font-size: 13px; letter-spacing: .03em; font-variant-numeric: tabular-nums; }
+
+.speech-bubble {
+  position: absolute; z-index: 10; left: 50%; top: 112px; transform: translateX(-50%);
+  max-width: 78%; padding: 8px 13px; border-radius: 18px; background: rgba(255,255,255,.94); color: #344149;
+  box-shadow: 0 3px 10px rgba(0,0,0,.10); font-weight: 800; font-size: clamp(12px, 3.8vw, 16px); text-align: center;
+}
+.speech-bubble::before { content: ""; position: absolute; top: -8px; left: 50%; transform: translateX(-50%); border-width: 0 8px 9px; border-style: solid; border-color: transparent transparent rgba(255,255,255,.94); }
+.warning-mark { position: absolute; z-index: 11; left: 50%; top: 50px; transform: translateX(38px); font-size: 34px; font-weight: 1000; color: #f64a3f; text-shadow: 0 2px 0 #fff, 0 0 8px rgba(255,255,255,.8); animation: popWarn .18s ease-out both; }
+@keyframes popWarn { from { transform: translateX(38px) scale(.2) rotate(-10deg); opacity: 0; } to { transform: translateX(38px) scale(1) rotate(7deg); opacity: 1; } }
+
+.countdown { position: absolute; z-index: 30; inset: 0; display: grid; place-items: center; font-weight: 1000; font-size: clamp(64px, 24vw, 118px); color: white; text-shadow: 0 5px 0 rgba(61,80,55,.34), 0 0 24px rgba(38,58,35,.22); pointer-events: none; }
+.hidden { display: none !important; }
+
+.overlay { position: absolute; z-index: 25; inset: 0; display: none; place-items: center; padding: 54px 16px 22px; background: rgba(39, 63, 43, .20); backdrop-filter: blur(2px); }
+.panel-screen.active { display: grid; }
+.panel { width: min(92%, 360px); border-radius: 28px; background: var(--panel); padding: 26px 22px 22px; text-align: center; box-shadow: 0 12px 38px rgba(38,65,43,.22); border: 2px solid rgba(255,255,255,.85); }
+.series { margin: 0 0 7px; font-size: 11px; letter-spacing: .12em; font-weight: 900; color: #6c7d70; }
+h1, h2 { margin: 0; color: #2f3c42; line-height: 1.15; }
+h1 { font-size: clamp(31px, 10vw, 46px); }
+h2 { font-size: clamp(34px, 10vw, 48px); }
+.howto { margin: 18px 0 16px; font-size: clamp(13px, 4vw, 16px); font-weight: 700; line-height: 1.75; }
+.control-guide { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 0 auto 18px; max-width: 240px; }
+.control-guide span { border-radius: 14px; padding: 8px 4px 6px; background: #edf6ea; font-size: 25px; font-weight: 900; }
+.control-guide small { display: block; font-size: 10px; margin-top: -2px; }
+.main-button { width: min(100%, 260px); min-height: 54px; border: 0; border-radius: 999px; background: linear-gradient(#ff866e, #ff684f); color: #fff; font-weight: 1000; font-size: 20px; box-shadow: 0 5px 0 #ce4e3e, 0 9px 18px rgba(205,78,62,.22); cursor: pointer; touch-action: manipulation; }
+.main-button:active { transform: translateY(3px); box-shadow: 0 2px 0 #ce4e3e, 0 5px 12px rgba(205,78,62,.18); }
+.mute-note { margin: 15px 0 0; color: #728077; font-size: 10.5px; line-height: 1.5; }
+.result-eyebrow { min-height: 18px; margin: 0 0 5px; font-size: 13px; font-weight: 1000; color: #ef7058; letter-spacing: .05em; }
+.result-details { margin: 20px auto; padding: 14px 16px; border-radius: 18px; background: #f0f6ed; font-size: 17px; font-weight: 900; line-height: 1.7; font-variant-numeric: tabular-nums; }
+.result-details .best { color: #de5a46; }
+.result-details .sub { display:block; margin-top:6px; font-size:12px; color:#728077; font-weight:800; }
+
+.tap-zones { position: absolute; z-index: 5; inset: auto 0 8px; height: 62px; display: grid; grid-template-columns: repeat(3, 1fr); pointer-events: none; opacity: .45; }
+.tap-zone { display: grid; place-items: end center; font-size: 18px; font-weight: 1000; color: rgba(43,67,45,.48); border-right: 1px dashed rgba(60,90,60,.14); }
+.tap-zone:last-child { border-right: 0; }
+.tap-zone span { padding-bottom: 4px; }
+.game-shell.playing .tap-zones { opacity: .62; }
+.game-shell:not(.playing) .tap-zones { display: none; }
+
+@media (max-width: 340px) {
+  .panel { padding: 20px 16px 18px; border-radius: 22px; }
+  .howto { margin: 13px 0; line-height: 1.58; }
+  .control-guide { margin-bottom: 14px; }
+  .main-button { min-height: 49px; }
+  .speech-bubble { top: 104px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+}
