@@ -88,17 +88,12 @@
 
   <script data-otg-visit-counter>
     (() => {
+      if (window.top !== window.self) return;
+      if (location.hostname !== 'ryg4mk.github.io') return;
+
       const gameId = '003';
-      const isPublished = location.hostname === 'ryg4mk.github.io';
-      if (!isPublished) return;
+      const key = 'one_take_' + gameId + '_views_bkg_otg_views_20261008_v2';
 
-      const sessionKey = 'otg-game-visit-' + gameId;
-      try {
-        if (sessionStorage.getItem(sessionKey) === '1') return;
-        sessionStorage.setItem(sessionKey, '1');
-      } catch {}
-
-      const key = 'one_take_' + gameId + '_views_bkg_otg_20261008_v1';
       fetch('https://countapi.mileshilliard.com/api/v1/hit/' + encodeURIComponent(key), {
         credentials: 'omit',
         referrerPolicy: 'no-referrer',
